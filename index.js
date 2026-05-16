@@ -44,12 +44,12 @@ const { say } = cfonts
 console.log(chalk.magentaBright('\n🐉❀ Gotenks V1 Bot Iniciando... ❀🌀'))
 say('Gotenks V1', {
   align: 'center',           
-  gradient: ['orange', 'yellow'] 
+  gradient: ['yellow', 'red'] 
 })
 say('Made with love by Destroy', {
   font: 'console',
   align: 'center',
-  gradient: ['orange', 'red']
+  gradient: ['yellow', 'magenta']
 })
 console.log(chalk.yellowBright('🌀🐉 Modo Fusión Activado - Gotenks V1 🐉🌀'))
 
@@ -140,14 +140,14 @@ if (methodCodeQR) {
 } else if (methodCode) {
   opcion = "2";
 } else if (!fs.existsSync("./Sessions/Owner/creds.json")) {
-  console.log(chalk.yellowBright.bold('\n🌀🐉 Modo Fusión Gotenks V1 Activado 🐉🌀\n'))
-  opcion = readlineSync.question(chalk.bold.white("Seleccione una opción:\n") + chalk.orangeBright("1. Con código QR\n") + chalk.yellowBright("2. Con código de texto de 8 dígitos\n🌀--> "));
+  console.log(chalk.yellowBright.bold('\n🐉🌀 Modo Fusión Gotenks V1 Activado 🐉🌀\n'))
+  opcion = readlineSync.question(chalk.bold.white("Seleccione una opción:\n") + chalk.yellowBright("1. Con código QR\n") + chalk.cyanBright("2. Con código de texto de 8 dígitos\n🌀--> "));
   while (!/^[1-2]$/.test(opcion)) {
     console.log(chalk.bold.redBright(`🐉 No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`));
     opcion = readlineSync.question("🌀--> ");
   }
   if (opcion === "2") {
-    console.log(chalk.bold.yellowBright(`\n🐉 Por favor, Ingrese el número de WhatsApp.\n${chalk.bold.orangeBright("Ejemplo: +57301******")}\n${chalk.bold.yellowBright('🌀---> ')}`));
+    console.log(chalk.bold.yellowBright(`\n🐉 Por favor, Ingrese el número de WhatsApp.\n${chalk.bold.greenBright("Ejemplo: +57301******")}\n${chalk.bold.yellowBright('🌀---> ')}`));
     phoneInput = readlineSync.question("");
     phoneNumber = normalizePhoneForPairing(phoneInput);
   }
@@ -240,7 +240,7 @@ async function startBot() {
       reconexion = 0;
       const userName = sock.user.name || "Desconocido";
       console.log(chalk.yellowBright.bold(`[ 🐉🌀 ] Gotenks V1 Conectado a: ${userName} 🌀🐉`));
-      console.log(chalk.orangeBright('⚡ Modo Fusión Activado - Listo para pelear ⚡'));
+      console.log(chalk.greenBright('⚡ Modo Fusión Activado - Listo para pelear ⚡'));
     }
     if (isNewLogin) log.info("🐉 Nuevo dispositivo detectado");
     if (receivedPendingNotifications === true) {
