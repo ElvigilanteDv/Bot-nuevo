@@ -13,10 +13,10 @@ export default {
     const basePath = 'Sessions'
     const sessionPath = sessionTypes.map((type) => path.join(basePath, type, cleanId)).find((p) => fs.existsSync(p))
     if (!sessionPath) {
-      return m.reply('《✧》 Este comando solo puede ser usado desde una instancia de Sub-Bot.')
+      return m.reply('《🐉》 Este comando solo puede ser usado desde una instancia de Sub-Bot.')
     }
     try {
-      await m.reply('《✧》 Cerrando sesión del Socket...')
+      await m.reply('《🐉》 Cerrando sesión del Socket Saiyan...')
       await client.logout()
       setTimeout(() => {
         if (fs.existsSync(sessionPath)) {
@@ -25,7 +25,7 @@ export default {
         }
       }, 2000)
       setTimeout(() => {
-        m.reply(`《✧》 Sesión finalizada correctamente.\nPuedes reconectarte usando *${usedPrefix}code*`)
+        m.reply(`《🌀》 Sesión finalizada correctamente.\nPuedes reconectarte usando *${usedPrefix}code*`)
       }, 3000)
     } catch (e) {
       await m.reply(`> An unexpected error occurred while executing command *${usedPrefix + command}*. Please try again or contact support if the issue persists.\n> [Error: *${e.message}*]`)
