@@ -10,8 +10,8 @@ import fs from "fs";
 import path from "path";
 import readlineSync from "readline-sync";
 import os from "os";
-import { smsg } from "./core/message.js";
-import db from "./core/system/database.js";
+import { smsg } from "./lib/message.js";
+import db from "./lib/system/database.js";
 import { startSubBot } from './core/subs.js';
 import { exec } from "child_process";
 
