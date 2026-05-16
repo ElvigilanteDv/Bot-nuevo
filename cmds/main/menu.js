@@ -22,31 +22,30 @@ const tags = {
 
 const defaultMenu = {
   before: `
-╔══════════════════╗
-║🐉 𝙶𝙾𝚃𝙴𝙽𝙺𝚂 𝚅𝟷 𝙱𝙾𝚃 🌀  ║
-╠══════════════════╣
-║ Hola~ soy %botname 🐉
-║ *%name*, %greeting
-║ 
-║ 🐉 *Tipo:* %tipo
-║ ⚡ *Nivel:* *100%*
-║ 📅 *Fecha:* %date
-║ 🕐 *Hora:* %time
-║ ⏱️ *Activo:* %uptime
-╠═════════════════╣
-║      🌀 𝙲𝙾𝙼𝙰𝙽𝙳𝙾𝚂 𝙶𝙾𝚃𝙴𝙽𝙺𝚂       
-%readmore
+◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+│  🐉 𝙶𝙾𝚃𝙴𝙽𝙺𝚂 𝚅𝟷 𝙱𝙾𝚃 🌀   │
+├──────────────────────────────┤
+│ 𝐻𝑜𝑙𝑎~ 𝑠𝑜𝑦 %botname
+│ *%name*, %greeting
+│
+│ 🐉 𝑇𝑖𝑝𝑜: %tipo
+│ ⚡ 𝑁𝑖𝑣𝑒𝑙: 100%
+│ 📅 %date
+│ 🕐 %time
+│ ⏱️ %uptime
+├──────────────────────────────┤
+│    🌀 𝐶𝑂𝑀𝐴𝑁𝐷𝑂𝑆 🌀     │
+├──────────────────────────────┤
 `.trimStart(),
-  header: '\n╠═ %category ═╣\n',
-  body: '║ 🌀 *%cmd* %islimit %isPremium',
-  footer: '',
+  header: '\n│ ⚡ %category\n│\n',
+  body: '│   🌀 %cmd %islimit %isPremium',
+  footer: '\n│',
   after: `
-╠════════════════╣
-║🐉 *Gotenks V1 Bot* 
-║🌀 Fusión: Goten + Trunks
-╚════════════════╝
-
-*¡Que la fuerza Gotenks te acompañe!* 🌀🐉
+├──────────────────────────────┤
+│ 🐉 𝐺𝑜𝑡𝑒𝑛𝑘𝑠 𝑉1 𝐵𝑜𝑡
+│ 📺 %channelName
+◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+*𝐹𝑢𝑠𝑖𝑜𝑛 𝐻𝑎!* 🌀🐉
 `.trim(),
 };
 
@@ -86,7 +85,12 @@ export default {
           premium: p.premium,
         }));
 
-      let nombreBot = global.db.data.settings?.[client.user.id.split(':')[0] + '@s.whatsapp.net']?.namebot || 'Gotenks V1';
+      const botId = client.user.id.split(':')[0] + '@s.whatsapp.net';
+      const botSettings = global.db.data.settings[botId] || {};
+      
+      let nombreBot = botSettings.namebot || 'Gotenks V1';
+      const canalId = botSettings.id || '120363404707199986@newsletter';
+      const canalName = botSettings.nameid || '✦ Gotenks V1 Bot 🐉🌀';
 
       const imagePath = join(process.cwd(), 'lib', 'gotenks.jpg');
       let bannerFinal = null;
@@ -94,8 +98,7 @@ export default {
         bannerFinal = fs.readFileSync(imagePath);
       }
 
-      const botJid = client.user.id.split(':')[0] + '@s.whatsapp.net';
-      const isOficialBot = botJid === global.client?.user?.id?.split(':')[0] + '@s.whatsapp.net';
+      const isOficialBot = botId === global.client?.user?.id?.split(':')[0] + '@s.whatsapp.net';
       const tipo = isOficialBot ? '🐉 GOTENKS PRINCIPAL' : '🌀 SUB GOTENKS';
 
       const menuConfig = defaultMenu;
@@ -134,6 +137,7 @@ export default {
         tipo: tipo,
         readmore: readMore,
         greeting: getUwUGreeting(horaVenezuela.getHours()),
+        channelName: canalName,
       };
 
       let text = _text.replace(
@@ -141,19 +145,27 @@ export default {
         (_, name) => String(replace[name])
       );
 
-      if (bannerFinal) {
-        await client.sendMessage(m.chat, {
-          image: bannerFinal,
-          caption: text.trim(),
-          contextInfo: {
-            mentionedJid: [m.sender],
-            forwardingScore: 999,
-            isForwarded: true
+      const messageContent = {
+        contextInfo: {
+          mentionedJid: [m.sender],
+          forwardingScore: 999,
+          isForwarded: true,
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: canalId,
+            newsletterName: canalName,
+            serverMessageId: ''
           }
-        }, { quoted: m });
+        }
+      };
+
+      if (bannerFinal) {
+        messageContent.image = bannerFinal;
+        messageContent.caption = text.trim();
       } else {
-        await client.reply(m.chat, text.trim(), m);
+        messageContent.text = text.trim();
       }
+
+      await client.sendMessage(m.chat, messageContent, { quoted: m });
 
     } catch (e) {
       console.error('Error en menu Gotenks:', e);
