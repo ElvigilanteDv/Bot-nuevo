@@ -20,7 +20,7 @@ export default {
     const botSettings = global.db.data.settings[botId] || {}
     const isOficialBot = botId === global.client.user.id.split(':')[0] + '@s.whatsapp.net'
     const botType = isOficialBot ? 'Principal/Owner' : 'Sub Bot'
-    const caption = `✿ *Sesión del bot reiniciada correctamente!*.`
+    const caption = `🌀 *Sesión del bot reiniciada correctamente!*.`
     const phone = args[0] ? args[0].replace(/\D/g, '') : m.sender.split('@')[0]
     const chatId = m.chat
       if (botType === 'Sub Bot') {
