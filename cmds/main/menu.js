@@ -51,7 +51,7 @@ const defaultMenu = {
 
 export default {
   command: ['menu', 'help', 'menú', 'ayuda', 'comandos', 'gotenksmenu'],
-  category: 'info',
+  category: 'grupo',
   run: async (client, m, args, usedPrefix, command) => {
     try {
       const { exp, limit, level } = global.db.data.users[m.sender] || {};
