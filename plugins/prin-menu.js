@@ -105,10 +105,31 @@ handler.before = async (m, { conn }) => {
     let text = ''
     if (category === 'main') {
       text = `*📡 COMANDOS PRINCIPALES*\n\n`
+      
+      let mainCommands = Object.values(global.plugins).filter(cmd => cmd.tags?.includes('main') && cmd.command)
+      for (let cmd of mainCommands) {
+        let commandName = Array.isArray(cmd.command) ? cmd.command[0] : cmd.command
+        let desc = cmd.desc || 'Sin descripción'
+        text += `#${commandName} - ${desc}\n`
+      }
     } else if (category === 'downloader') {
       text = `*📥 COMANDOS DOWNLOADER*\n\n`
+      
+      let downloaderCommands = Object.values(global.plugins).filter(cmd => cmd.tags?.includes('downloader') && cmd.command)
+      for (let cmd of downloaderCommands) {
+        let commandName = Array.isArray(cmd.command) ? cmd.command[0] : cmd.command
+        let desc = cmd.desc || 'Sin descripción'
+        text += `#${commandName} - ${desc}\n`
+      }
     } else if (category === 'owner') {
       text = `*👑 COMANDOS OWNER*\n\n`
+      
+      let ownerCommands = Object.values(global.plugins).filter(cmd => cmd.tags?.includes('owner') && cmd.command)
+      for (let cmd of ownerCommands) {
+        let commandName = Array.isArray(cmd.command) ? cmd.command[0] : cmd.command
+        let desc = cmd.desc || 'Sin descripción'
+        text += `#${commandName} - ${desc}\n`
+      }
     }
 
     await conn.sendMessage(m.chat, { text: text }, { quoted: m })
